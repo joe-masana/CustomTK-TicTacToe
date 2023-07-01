@@ -145,9 +145,6 @@ def click_button(button_press):
     win_condition()
     tie_contition()
 
-def appearance_toggle():
-    pass
-
 def quit():
     app.destroy()
 
