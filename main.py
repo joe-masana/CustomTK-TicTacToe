@@ -1,6 +1,7 @@
 # Imports
 import customtkinter as ctk
 from random import randint
+from math import floor
 
 # App Setup
 app = ctk.CTk()
@@ -8,6 +9,10 @@ app.title('CTk_TicTacToe')
 w = app.winfo_screenwidth()
 h = app.winfo_screenheight()
 app.geometry(f'{int(w/1.5)}x{int(h/1.35)}')
+frame_width = floor(w/3)
+frame_height = floor(h/2)
+button_width = floor(w/10)
+button_height = floor(h/6)
 
 # Initial Apperance
 ctk.set_appearance_mode('system')
@@ -24,11 +29,12 @@ o_score = 0
 # Frame Widgets
 top_label = ctk.CTkLabel(master=app, text='CTk TicTacToe', text_color='black', font=('Arial', 40, 'bold'))
 top_label.pack()
-player_frame = ctk.CTkFrame(master=app, fg_color='transparent', width=w/3)
+player_frame = ctk.CTkFrame(master=app, fg_color='transparent', width=frame_width)
 player_frame.pack(pady=10)
-game_frame = ctk.CTkFrame(master=app, fg_color='black', width=w/3, height=h/2, border_width=2, border_color='black')
+game_frame = ctk.CTkFrame(master=app, fg_color='black', width=frame_width, height=frame_height, border_width=2,
+                          border_color='black')
 game_frame.pack()
-button_frame = ctk.CTkFrame(master=app, fg_color='transparent', width=w/3)
+button_frame = ctk.CTkFrame(master=app, fg_color='transparent', width=frame_width)
 button_frame.pack(pady=10)
 
 # Label Widgets
@@ -37,7 +43,7 @@ x_label.grid(row=0, column=0, padx=10)
 x_player_light = ctk.CTkButton(master=player_frame, text=None, height=12, width=12, fg_color='black', border_width=2,
                                border_color='black', state='disabled')
 x_player_light.grid(row=0, column=1)
-player_label = ctk.CTkLabel(master=player_frame, text='', font=('Arial', 20, 'bold'), width=w/5)
+player_label = ctk.CTkLabel(master=player_frame, text='', font=('Arial', 20, 'bold'), width=floor(w/5))
 player_label.grid(row=0, column=2, padx=10)
 o_label = ctk.CTkLabel(master=player_frame, text="Player O", text_color='red', font=('Arial', 20, 'bold'))
 o_label.grid(row=0, column=3)
@@ -112,11 +118,13 @@ def win_condition():
             for button in button_array:
                 button.configure(state='disabled')
 
+
 def tie_contition():
     if turn_number == 10 and winner == []:
         x_player_light.configure(fg_color='black')
         o_player_light.configure(fg_color='black')
         player_label.configure(text=f'Game is a tie!', text_color='black')
+
 
 def clear_board():
     global turn_number
@@ -126,6 +134,7 @@ def clear_board():
     starting_player()
     for button in button_array:
         button.configure(text='', state='normal', border_width=0)
+
 
 def click_button(button_press):
     global turn_number
@@ -145,8 +154,10 @@ def click_button(button_press):
     win_condition()
     tie_contition()
 
-def quit():
+
+def end_game():
     app.destroy()
+
 
 def starting_player():
     global turn_number
@@ -161,6 +172,7 @@ def starting_player():
         player_label.configure(text="O Player's Turn", text_color='red')
         x_player_light.configure(fg_color='black')
         o_player_light.configure(fg_color='yellow')
+
 
 def win_score():
     global x_score
@@ -179,40 +191,40 @@ def win_score():
 
 
 # Button Widgets
-button_tl = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_tl': click_button(m))
+button_tl = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_tl': click_button(m))
 button_array.append(button_tl)
 button_tl.grid(row=0, column=1, padx=2, pady=2)
-button_tm = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_tm': click_button(m))
+button_tm = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_tm': click_button(m))
 button_array.append(button_tm)
 button_tm.grid(row=0, column=2, padx=2, pady=2)
-button_tr = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_tr': click_button(m))
+button_tr = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_tr': click_button(m))
 button_array.append(button_tr)
 button_tr.grid(row=0, column=3, padx=2, pady=2)
-button_ml = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_ml': click_button(m))
+button_ml = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_ml': click_button(m))
 button_array.append(button_ml)
 button_ml.grid(row=1, column=1, padx=2, pady=2)
-button_mm = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_mm': click_button(m))
+button_mm = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_mm': click_button(m))
 button_array.append(button_mm)
 button_mm.grid(row=1, column=2, padx=2, pady=2)
-button_mr = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_mr': click_button(m))
+button_mr = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_mr': click_button(m))
 button_array.append(button_mr)
 button_mr.grid(row=1, column=3, padx=2, pady=2)
-button_bl = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_bl': click_button(m))
+button_bl = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_bl': click_button(m))
 button_array.append(button_bl)
 button_bl.grid(row=2, column=1, padx=2, pady=2)
-button_bm = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_bm': click_button(m))
+button_bm = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_bm': click_button(m))
 button_array.append(button_bm)
 button_bm.grid(row=2, column=2, padx=2, pady=2)
-button_br = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=h/6, width=w/10, font=button_font,
-                          command=lambda m='button_br': click_button(m))
+button_br = ctk.CTkButton(master=game_frame, fg_color='gainsboro', text='', height=button_height, width=button_width,
+                          font=button_font, command=lambda m='button_br': click_button(m))
 button_array.append(button_br)
 button_br.grid(row=2, column=3, padx=2, pady=2)
 
@@ -221,7 +233,7 @@ restart_button = ctk.CTkButton(master=button_frame, text='Restart', fg_color='gr
                                corner_radius=30, hover_color='darkgreen', font=('Arial', 20), command=clear_board)
 restart_button.pack(side='left', padx=25)
 quit_button = ctk.CTkButton(master=button_frame, text='Quit', fg_color='red', height=30, width=30, corner_radius=30,
-                            hover_color='darkred', font=('Arial', 20), command=quit)
+                            hover_color='darkred', font=('Arial', 20), command=end_game)
 quit_button.pack(side='right', padx=25)
 
 starting_player()
